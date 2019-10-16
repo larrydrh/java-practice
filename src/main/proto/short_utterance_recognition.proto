@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ficus.inference.speech.rpcdata";
+option java_outer_classname = "ShortUtteranceRecognition";
+option objc_class_prefix = "HLW";
+  
+package ficus.inference.speech.rpcdata;
+
+import public "recognition_common.proto";
+ 
+message PreprocessHotwordsRequest {
+    HotWords hotwords = 1; // 原始热词,包括词表和对应概率,如无特殊需求概率可不传,会使用默认值
+}
+ 
+message PreprocessHotwordsResponse {
+    repeated CompiledHotwords compiled_hotwords = 1; // 编译后的热词,数组表示不同的热词模型
+}
+ 
+message RecognizeRequest {
+    bytes audios = 1; // 输入音频编码
+    repeated CompiledHotwords compiled_hotwords = 2; // 传编译后的热词
+    AudioConfig audio_config = 3; // 音频配置,目前版本未使用,通过audios传文件头读取
+    SpeechConfig speech_config = 4; // 语言,关键词等配置
+}
+
+message InternalResultSwitch {
+    bool need_combined_decoder_result = 1; // 是否输出decoder中间结果
+}
+
+message BatchRecognizeRequest {
+    repeated RecognizeRequest requests = 1; // batch请求
+    InternalResultSwitch internal_switch = 2; // 是否输出中间结果
+    int32 max_topn = 3; // 对每个audio请求,最多返回多少个识别结果,输入-1将返回所有算法给出的topn识别结果
+}
+ 
+message RecognizeResponse {
+    AsrStatus status = 1;
+    repeated SpeechRecogResult rec_results = 2; // topN识别结果
+    KwsResult kws_result = 3; // 关键词结果
+    repeated ASRDecoderResult decoder_results = 4; // topN decoder结果
+}
+ 
+message BatchRecognizeResponse {
+    repeated RecognizeResponse rec_responses = 1;
+    InternalResultSwitch internal_switch = 2;
+}
+
+enum RequestType {
+    UNKNOW_OPTION = 0;
+    COMPILE_HOTWORD = 1; // 编译热词
+    BATCH_RECOGNIZE = 2; // 识别
+};
+
+// 外部接口的输入
+message ShortASRRequest {
+    RequestHeader request_header = 1;
+    repeated RecognizeRequest requests = 2; // batch请求
+    RequestType request_type = 3;
+    BatchRecognizeRequest batch_recognize_request = 4; // 如request type为识别,则输入这个字段
+    PreprocessHotwordsRequest preprocess_hotwords_request = 5; // 如request type为编译热词,则输入这个字段
+}
+
+// 外部接口的输出
+message ShortASRResponse {
+    AsrStatus status = 1;
+    RequestType request_type = 2;
+    BatchRecognizeResponse batch_recognize_response = 3; // 如request type为识别,则输出这个字段
+    PreprocessHotwordsResponse preprocess_hotwords_response = 4; // 如request type为编译热词,则输这个字段
+}
+

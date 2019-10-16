@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ficus.inference.speech.rpcdata";
+option java_outer_classname = "TextModeration";
+option objc_class_prefix = "HLW";
+  
+package ficus.inference.speech.rpcdata;
+
+import public "recognition_common.proto";
+
+message TextDetectorConfig {
+    repeated Text words = 1;
+}
+
+message TextModerationConfig {
+    TextDetectorConfig customized_text_config = 1; // 自定义词表
+}
+
+message TextModerationRequest {
+    repeated SpeechRecogResult rec_results = 1; // asr输出的topn识别结果
+    repeated ASRDecoderResult decoder_results = 2; // asr输出的topn decoder中间结果
+}
+
+message BatchTextModerationRequest {
+    RequestHeader request_header = 1;
+    TextModerationConfig config = 2; // 参数,包括自定义词表等
+    repeated TextModerationRequest requests = 3; // batch请求
+}
+
+message TextModerationResponse {
+    AsrStatus status = 1;
+    repeated ModerationResult mod_results = 2; // 不同的审核内容,待merge
+    // repeated SpeechRecogResult rec_results = 3; // 顺序改动放到moderation combine做
+}
+
+message BatchTextModerationResponse {
+    AsrStatus status = 1;
+    repeated TextModerationResponse responses = 2;
+}
+

@@ -1,0 +1,224 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ficus.inference.speech.rpcdata";
+option java_outer_classname = "RecognitionCommon";
+option objc_class_prefix = "HLW";
+  
+package ficus.inference.speech.rpcdata;
+
+// 1.错误码部分
+message AsrStatus{
+    enum Code {
+        //success
+        SUCCESS = 0;
+
+        //error
+        /* 废弃,下版本删掉
+        INPUT_INVALID_ERROR = 1; // 输入错误
+        INTERNAL_SERVER_ERROR = 2; // 服务内部处理出错
+        BATCH_SIZE_EXCEEDED = 3; // 输入batch size大于服务配置值
+        SERIALIZE_ERROR = 4; // 序列化/反序列化错误
+        KEYWORD_EXTRACT_ERROR = 5; // 关键词错误
+        */
+
+        INPUT_DESERIALIZE_ERROR = 1001; //输入protobuf结构反序列化失败
+        INPUT_PROTO_INVALID_ERROR = 1002; //输入protobuf反序列化成功了，但是字段非法
+        INPUT_FIELD_EMPTY_ERROR = 1003; //输入proto中必须的输入字段为空
+        INPUT_BATCH_SIZE_EXCEEDED_ERROR = 1004; //输入的batch size大于config限制
+        INPUT_PROTO_TRANSFORM_ERROR = 1005; //输入的proto转成C++类型错误
+        INPUT_AUDIO_LOAD_ERROR = 1101; //输入的音频读取失败
+        INPUT_AUDIO_DURATION_EXCEED_LIMIT_ERROR = 1102; //传入音频超出限制时长
+        INPUT_AUDIO_SLICE_OUT_OF_BOUNDARY_ERROR = 1103; //切音频起止时间超出音频范围
+        INPUT_HOTWORDS_LOAD_ERROR = 1104; //输入的热词读取失败
+        INPUT_CONFIG_INVALID_ERROR = 1201; // config或者param输入了无效参数
+        INPUT_CONFIG_PARSE_ERROR = 1202; //config解析错误
+        INPUT_ARRAY_DIMENSION_MISMATCH_ERROR = 1203; //接口输入有某些需要size相同的数组size不同
+        OUTPUT_PROTO_TRANSFORM_ERROR = 2001; //输出的C++类型转proto失败
+        INTERNAL_SERVER_UNKNOWN_ERROR = 5000; //未定义细分类的服务内部处理错误
+        INTERNAL_UNEXPECTED_ERROR = 5001; //算法内部出现了不符合预期的异常
+        INTERNAL_FUNCTION_NOT_IMPLEMENTED_ERROR = 5002; //功能未实现
+        INTERNAL_HTTP_REQUEST_SEND_ERROR = 5101; //python模块服务无法调用
+        INTERNAL_HTTP_REQUEST_TIMEOUT_ERROR = 5102; //调用python模块超时
+        INTERNAL_HTTP_RESPONSE_PARSER_ERROR = 5103; //python模块返回了异常结果
+        INTERNAL_SHORT_ASR_INIT_ERROR = 5201; //识别初始化错误
+        INTERNAL_KALDI_ERROR = 5202;  //多个模型结果combine出错
+        INTERNAL_KEYWORD_EXTRACT_ERROR = 5203;  // 关键词提取错误
+        INTERNAL_CONVERT_NUMBER_FAILED_ERROR = 5301; //转数字失败
+        INTERNAL_ADD_PUNC_FAILED_WARNING = 5302; //标点处理错误
+        INTERNAL_MODERATION_CONFIG_LOADING_ERROR = 5401; // 内容审核相关config错误
+    }
+    Code code = 1; // 返回值
+    string info = 2; // 错误log信息
+}
+
+// 2.配置部分
+message AudioConfig { // 音频相关配置,本版本实际没有用到,而是直接根据bytes audios带的文件头信息做解析
+    enum AudioEncoding { // 音频的编码
+        UNSPECIFIED = 0;
+        PCM = 1;
+        AAC = 2;
+        MPEG2 = 3;
+    }
+    AudioEncoding aue = 1;
+    int32 sample_rate = 2; // 采样率（范围为8000-48000）
+}
+
+message SpeechConfig { // 识别相关设置
+    // 转写的语言。本版本未实际使用
+    enum Language {
+        UNSPECIFIED = 0;
+        MANDARIN = 1;
+    }
+    Language lang = 1;
+
+    // 情景模式，针对不同的应用场景可定制模型，例如医疗。本版本未实际使用
+    enum Scene {
+        GENERAL_SCENE = 0;
+    }
+    Scene scene = 2;
+
+    // 保留字段，模型的不同decoder参数，供算法扩展.本版本未实际使用
+    enum Decoder {
+        GENERAL_DECODER = 0;
+    }
+    Decoder decoder = 3;
+
+    // 关键词（仅支持中文，不支持英文和符号）。
+    bool enable_keywords = 4;
+    repeated Text keywords = 5;
+}
+
+// 3.热词部分
+message HotWords { // 原始热词
+    repeated float hot_words_probs = 1; // 无特殊需求可不传或使用默认值2.0
+    repeated string hot_words_strings = 2; // 热词
+}
+
+message Vocab{
+    repeated string vocab_list = 1;
+}
+
+message HotwordsMapElement{
+    int32 key = 1;
+    repeated int32 values = 2;
+}
+
+message CompiledHotwords { // 编译后的热词
+    bytes hotwords_fst = 1;
+    Vocab vocab = 2;
+    repeated HotwordsMapElement map_elements = 3;
+} 
+
+// 4.识别结果部分
+message Text {
+    string text = 1;
+}
+ 
+message TextUnit { // 短语音识别中间结果
+    repeated string texts = 1; // 每个字
+    repeated double start_times = 2;
+    repeated double end_times = 3;
+    repeated float probs = 4;
+    repeated int32 types = 5;
+    repeated int32 speaker_ids = 6;
+    int32 time_ms = 7;
+    bool enable_time_and_prob = 8;
+}
+
+message ASRDecoderResult { // 中间结果,文本审核模块的输入
+    float ds2_score = 1;
+    float am_score = 2;
+    repeated int32 word_indices = 3;
+    repeated string words = 4;
+    repeated int32 token_indices = 5;
+
+    message TimeStepPair {
+        int32 key = 1;
+        int32 value = 2;
+    }
+    repeated TimeStepPair time_steps = 6;
+    repeated float log_probs = 7;
+}
+
+message SpeechRecogResult { // 短语音识别结果
+    Text text = 1; // 识别文本
+    TextUnit textunit = 2; // 识别文本的详细信息
+    float confidence = 3; // 置信度
+}
+
+// 5.关键词部分
+message KwsScorePair {
+    string word = 1;
+    float score = 2;
+}
+ 
+message KwsInfo {
+    int32 start_ms = 1;
+    int32 end_ms = 2;
+    float confidence = 3;
+    bool selected = 4;
+    repeated KwsScorePair scores = 5;
+}
+ 
+message KwsInfoPair {
+    Text text = 1;
+    repeated KwsInfo infos = 2;
+}
+ 
+message KwsResult { // 关键词结果
+    repeated KwsInfoPair info_map = 1; // 一组关键词结果,结构是map<Text, std::vector<KwsInfo>>
+    string version = 2; // 关键词算法版本
+}
+
+// 6.审核结果部分
+enum ModerationSuggestionType {
+    // 内容违规，建议隔离
+    BLOCK = 0;
+    // 内容可能违规，建议进行人工审核
+    REVIEW = 1;
+    // 内容不违规，建议放行
+    PASS = 2;
+}
+
+enum ModerationType {
+    // 未知文本
+    UNKNOWN_TEXT = 0;
+    // 涉政文本
+    POLITICS_TEXT = 1;
+    // 辱骂文本
+    ABUSE_TEXT = 2;
+    // 自定义文本
+    CUSTOMIZED_TEXT = 4;
+    // 色情文本
+    PORN_TEXT = 8;
+    // 色情音频
+    PORN_AUDIO = 16;
+    // 暴恐文本
+    TERROR_TEXT = 32;
+    // 广告文本
+    ADS_TEXT = 64;
+}
+
+message ModerationResult {
+    ModerationType type = 1; // 审核结果类型
+    float score = 2; // 审核分数
+    ModerationSuggestionType suggestion = 3; // 建议类型
+
+    // 算法命中的关键词
+    repeated Text hit_texts = 4;
+    repeated TextUnit hit_text_units = 5;
+
+    // 命中的部分在本句中的时间
+    // 如果关键词检出 ， 对应是所有词的起的最小值 ， 止的最大值
+    // 如果不是匹配词的算法 ， 对应的是句子第一个字的起和最后一个字的止
+    double start_time = 6;
+    double end_time = 7;
+
+    int32 suggest_result_idx = 8; // 审查中在第几个topn result发现了问题
+}
+
+message RequestHeader {
+    bytes reqid = 1;
+}
+

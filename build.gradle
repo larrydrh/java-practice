@@ -1,0 +1,79 @@
+plugins {
+    id 'java'
+    id 'application'
+    id "org.springframework.boot" version "2.1.6.RELEASE"
+    id 'com.google.protobuf' version '0.8.8'
+}
+repositories {
+    mavenCentral()
+}
+
+def grpcVersion = '1.24.0' // CURRENT_GRPC_VERSION
+def protobufVersion = '3.10.0'
+def protocVersion = protobufVersion
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+    compile 'junit:junit:4.12'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    compile 'org.springframework.boot:spring-boot-starter-web:2.1.4.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-actuator:2.1.6.RELEASE'
+    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1'
+    compile group: 'org.springframework.kafka', name: 'spring-kafka', version: '2.2.2.RELEASE'
+
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    implementation "io.grpc:grpc-stub:${grpcVersion}"
+    runtime 'mysql:mysql-connector-java:5.1.47'
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+    // https://mvnrepository.com/artifact/com.rabbitmq/amqp-client
+    compile group: 'com.rabbitmq', name: 'amqp-client', version: '5.7.1'
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+    compile 'org.redisson:redisson-spring-boot-starter:3.9.1'
+    compile group: 'io.netty', name: 'netty-all', version: '4.1.38.Final'
+    compileOnly 'org.projectlombok:lombok:1.18.4'
+    annotationProcessor 'org.projectlombok:lombok:1.18.4'
+    compile group: 'com.google.guava', name: 'guava', version: '28.0-jre'
+    compile group: 'com.codahale.metrics', name: 'metrics-core', version: '3.0.2'
+    compile(group: 'ragnaros-extensions', name: 'simple-async', version: '1.0.e')
+
+}
+mainClassName = 'test.JavaDemo'
+
+protobuf {
+    protoc { artifact = "com.google.protobuf:protoc:${protocVersion}" }
+    plugins {
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}" }
+    }
+    generateProtoTasks {
+        all()*.plugins { grpc {} }
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["src/main/java", "build/generated/source/proto/main/java"]
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+    }
+}
+//test {
+//    useJUnitPlatform()
+//    testLogging {
+//        events "passed", "skipped", "failed"
+//    }
+//}
+wrapper {
+    gradleVersion = '5.0'
+}
+
+tasks.withType(Test) {
+    scanForTestClasses = false
+    include "**/*Test.class" // whatever Ant pattern matches your test class files
+}

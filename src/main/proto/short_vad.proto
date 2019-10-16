@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ficus.inference.speech.rpcdata";
+option java_outer_classname = "ShortVAD";
+option objc_class_prefix = "HLW";
+  
+package ficus.inference.speech.rpcdata;
+
+import public "recognition_common.proto";
+
+message ShortVADRequest {
+    bytes audios = 1; // 输入音频编码
+    AudioConfig audio_config = 2; // 编码格式
+}
+
+message BatchShortVADRequest { // batch输入
+    RequestHeader request_header = 1;
+    repeated ShortVADRequest requests = 2;
+}
+
+message ShortVADResponse {
+    AsrStatus status = 1; // 每个子请求的返回值
+    float prob = 2; // 概率
+
+    enum VadClass {
+        NON_SPEECH = 0; // 静音
+        SPEECH = 1; // 非静音
+    }
+    VadClass result = 3; // vad结果
+}
+
+message BatchShortVADResponse {
+    AsrStatus status = 1; // 整个batch的返回值
+    repeated ShortVADResponse responses = 2;
+}
+

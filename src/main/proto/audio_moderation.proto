@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ficus.inference.speech.rpcdata";
+option java_outer_classname = "AudioModeration";
+option objc_class_prefix = "HLW";
+  
+package ficus.inference.speech.rpcdata;
+
+import public "recognition_common.proto";
+
+message AudioModerationRequest {
+    bytes audios = 1; // 输入音频编码
+    AudioConfig audio_config = 2; // 编码格式
+}
+
+message BatchAudioModerationRequest { // batch请求
+    RequestHeader request_header = 1;
+    repeated AudioModerationRequest requests = 2;
+}
+ 
+message AudioModerationResponse {
+    AsrStatus status = 1; // 每个子请求的返回值
+    repeated ModerationResult mod_results = 2; // 每个子请求的不同的审核内容,待merge
+}
+ 
+message BatchAudioModerationResponse { // batch返回
+    AsrStatus status = 1; // 整个batch的返回值
+    repeated AudioModerationResponse responses = 2;
+}
+
