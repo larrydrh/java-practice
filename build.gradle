@@ -36,7 +36,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.4'
     compile group: 'com.google.guava', name: 'guava', version: '28.0-jre'
     compile group: 'com.codahale.metrics', name: 'metrics-core', version: '3.0.2'
-    compile(group: 'ragnaros-extensions', name: 'simple-async', version: '1.0.e')
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
 
 }
 mainClassName = 'test.JavaDemo'
