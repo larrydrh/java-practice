@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/greeter" />
             <option value="$PROJECT_DIR$/old-java-test" />
+            <option value="$PROJECT_DIR$/rabbitmq" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />

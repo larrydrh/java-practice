@@ -12,3 +12,11 @@ allprojects {
         jcenter()
     }
 }
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'application'
+}
+
+project(":rabbitmq") {
+    mainClassName = 'rabbitmq.Rabbit'
+}

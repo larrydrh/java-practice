@@ -10,3 +10,4 @@
 rootProject.name = 'gradle-practice'
 include 'greeter'
 include 'old-java-test'
+include 'rabbitmq'
