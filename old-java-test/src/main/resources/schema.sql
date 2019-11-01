@@ -1,0 +1,7 @@
+CREATE DATABASE IF NOT EXISTS experiment;
+
+CREATE TABLE IF NOT EXISTS  `experiment`.`hello` (
+ `id` int(32) NOT NULL AUTO_INCREMENT,
+ `value` varchar(256) NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
