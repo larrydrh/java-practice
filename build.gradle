@@ -20,3 +20,15 @@ subprojects {
 project(":rabbitmq") {
     mainClassName = 'rabbitmq.Rabbit'
 }
+
+project(":practice") {
+    mainClassName = 'practice.App'
+    dependencies {
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+        compile 'org.springframework.boot:spring-boot-starter-web:2.1.4.RELEASE'
+        compile group: 'cglib', name: 'cglib', version: '3.3.0'
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '2.1.1.RELEASE'
+
+
+    }
+}

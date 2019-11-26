@@ -5,7 +5,15 @@
       <profile default="true" name="Default" enabled="true" />
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="gradle-practice.greeter.main" target="1.8" />
+      <module name="gradle-practice.greeter.test" target="1.8" />
       <module name="gradle-practice.main" target="11" />
+      <module name="gradle-practice.old-java-test.main" target="1.8" />
+      <module name="gradle-practice.old-java-test.test" target="1.8" />
+      <module name="gradle-practice.practice.main" target="1.8" />
+      <module name="gradle-practice.practice.test" target="1.8" />
+      <module name="gradle-practice.rabbitmq.main" target="1.8" />
+      <module name="gradle-practice.rabbitmq.test" target="1.8" />
       <module name="gradle-practice.test" target="11" />
       <module name="java-test.main" target="11" />
       <module name="java-test.test" target="11" />

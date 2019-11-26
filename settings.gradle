@@ -7,7 +7,9 @@
  * in the user manual at https://docs.gradle.org/5.4.1/userguide/multi_project_builds.html
  */
 
-rootProject.name = 'gradle-practice'
+rootProject.name = 'java-test'
 include 'greeter'
 include 'old-java-test'
 include 'rabbitmq'
+include 'practice'
+include 'leetcode'
