@@ -1,0 +1,46 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.h2database:h2:1.4.197'
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.2.RELEASE")
+    }
+}
+
+plugins {
+    id 'java'
+    id "org.flywaydb.flyway" version "6.1.0"
+}
+
+//flyway {
+//    url = 'jdbc:mysql://localhost:3306/test'
+//    user = 'root'
+//    password = 'admin'
+//
+//}
+
+version 'unspecified'
+
+sourceCompatibility = 1.8
+mainClassName = 'DatabaseApplication'
+
+repositories {
+    mavenCentral()
+}
+
+def springbootVersion="2.2.2.RELEASE"
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.flywaydb', name: 'flyway-core', version: '6.1.0'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: "$springbootVersion"
+    compile "org.springframework.boot:spring-boot-starter-actuator:$springbootVersion"
+    compile "org.springframework.boot:spring-boot-starter-web:$springbootVersion"
+    compile 'io.micrometer:micrometer-registry-prometheus:1.1.4'
+//    compile 'org.springframework.boot:spring-boot-starter-web:2.2.2.RELEASE'
+//    compile('org.springframework.boot:spring-boot-starter-jdbc:2.2.2.RELEASE')
+//    compile 'org.springframework.boot:spring-boot-starter-actuator:2.1.6.RELEASE'
+//    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
+}

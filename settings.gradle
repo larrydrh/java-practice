@@ -13,3 +13,7 @@ include 'old-java-test'
 include 'rabbitmq'
 include 'practice'
 include 'leetcode'
+include 'spring-client'
+include 'database'
+include 'reactor'
+

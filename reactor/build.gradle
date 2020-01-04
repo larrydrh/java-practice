@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+version 'unspecified'
+
+sourceCompatibility = 1.11
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+}
+mainClassName='reactor.ReactorApplication'
+
+dependencies {
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.2.2.RELEASE'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.2'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.2'
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+    testCompile group: 'io.projectreactor', name: 'reactor-test', version: '3.3.1.RELEASE'
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: '2.2.2.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.2.2.RELEASE'
+    compile group: 'io.netty', name: 'netty-all', version: '4.1.44.Final'
+    compile group: 'io.projectreactor', name: 'reactor-core', version: '3.3.1.RELEASE'
+//    compile group: 'io.netty', name: 'netty-transport-native-epoll', version: '4.1.44.Final', classifier: 'linux-x86_64'
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.2.2.RELEASE'
+}

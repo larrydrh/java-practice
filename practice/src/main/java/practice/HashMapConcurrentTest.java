@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @author rhding
  */
 public class HashMapConcurrentTest {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception, InterruptedException {
         final HashMap<String, String> map = new HashMap<String, String>(2);
         ConcurrentHashMap cmap;
         Thread a = new Thread(new Runnable() {
