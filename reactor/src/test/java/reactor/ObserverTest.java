@@ -4,12 +4,18 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+import reactor.core.publisher.BaseSubscriber;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.UnicastProcessor;
 import reactor.core.scheduler.Schedulers;
 import reactor.test.StepVerifier;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
@@ -35,6 +41,38 @@ public class ObserverTest {
     }
 
     @Test
+    public void testBuffer() {
+        UnicastProcessor<String> hotSource = UnicastProcessor.create();
+        Flux<String> hotFlux = hotSource
+                .publish()
+                .autoConnect()
+                .onBackpressureBuffer(10);
+
+        CompletableFuture future = CompletableFuture.runAsync(() -> {
+            IntStream.range(0, 50).forEach(
+                    value -> {
+                        hotSource.onNext("value is " + value);
+                    }
+            );
+        });
+
+        hotFlux.buffer(5).subscribe(new BaseSubscriber<List<String>>() {
+            @Override
+            protected void hookOnSubscribe(Subscription subscription) {
+                request(20);
+            }
+
+            @Override
+            protected void hookOnNext(List<String> value) {
+                System.out.println("get value " + value);
+
+            }
+        });
+        future.thenRun(() -> hotSource.onComplete());
+        future.join();
+    }
+
+    @Test
     public void testOther() {
             Flux<Integer> ints = Flux.range(1, 4);
             ints.subscribe(i -> System.out.println(i),
@@ -45,7 +83,6 @@ public class ObserverTest {
             System.out.println(Flux.just("ding", "renhuan").filter(str-> str.equals("ding")).collectList());
 
     //        SynchronousSink;
-
             final Random random = new Random();
             Flux.generate(ArrayList::new, (list, sink) -> {
                 int value = random.nextInt(100);

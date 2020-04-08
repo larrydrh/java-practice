@@ -2,21 +2,13 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile default="true" name="Default" enabled="true" />
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.4/7103ab519b1cdbb0642ad4eaf1db209d905d0f96/lombok-1.18.4.jar" />
+        </processorPath>
+        <module name="java-test.unittest.main" />
+      </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="gradle-practice.greeter.main" target="1.8" />
-      <module name="gradle-practice.greeter.test" target="1.8" />
-      <module name="gradle-practice.main" target="11" />
-      <module name="gradle-practice.old-java-test.main" target="1.8" />
-      <module name="gradle-practice.old-java-test.test" target="1.8" />
-      <module name="gradle-practice.practice.main" target="1.8" />
-      <module name="gradle-practice.practice.test" target="1.8" />
-      <module name="gradle-practice.rabbitmq.main" target="1.8" />
-      <module name="gradle-practice.rabbitmq.test" target="1.8" />
-      <module name="gradle-practice.test" target="11" />
-      <module name="java-test.main" target="11" />
-      <module name="java-test.test" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>

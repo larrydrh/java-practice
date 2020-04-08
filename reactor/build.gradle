@@ -21,6 +21,7 @@ dependencies {
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.2'
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.2'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+    compile group: 'io.projectreactor.addons', name: 'reactor-extra', version: '3.3.1.RELEASE'
     testCompile group: 'io.projectreactor', name: 'reactor-test', version: '3.3.1.RELEASE'
 //    compile group: 'org.springframework.boot', name: 'spring-boot-starter-reactor-netty', version: '2.2.2.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.2.2.RELEASE'

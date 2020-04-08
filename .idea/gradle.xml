@@ -4,20 +4,25 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="$USER_HOME$/.sdkman/candidates/gradle/current" />
-        <option name="gradleJvm" value="1.8" />
+        <option name="gradleJvm" value="11" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/database" />
+            <option value="$PROJECT_DIR$/google" />
             <option value="$PROJECT_DIR$/greeter" />
+            <option value="$PROJECT_DIR$/grpc" />
+            <option value="$PROJECT_DIR$/kafka" />
             <option value="$PROJECT_DIR$/leetcode" />
             <option value="$PROJECT_DIR$/old-java-test" />
             <option value="$PROJECT_DIR$/practice" />
             <option value="$PROJECT_DIR$/rabbitmq" />
+            <option value="$PROJECT_DIR$/reactor" />
+            <option value="$PROJECT_DIR$/spring-client" />
+            <option value="$PROJECT_DIR$/thread-model" />
+            <option value="$PROJECT_DIR$/unittest" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />

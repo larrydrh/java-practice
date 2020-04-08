@@ -42,7 +42,30 @@ public class MonoTest {
                 error -> System.err.println("Error " + error),
                 () -> System.out.println("Done"),
                 sub -> sub.request(10));
-        Thread.sleep(1000);
+        Thread.sleep(500);
+        disposable.dispose();
+    }
+
+    @Test
+    public void testErrorHandle() {
+//        Mono.fromFuture();
+    }
+
+    @Test
+    public void testWebClientBatch() throws InterruptedException {
+        Disposable disposable =WebClient.create("http://localhost:8080/hello/mono").get().retrieve().bodyToMono(String.class).subscribe(i -> System.out.println("next:" + i),
+                error -> System.err.println("Error " + error),
+                () -> System.out.println("Done"),
+                sub -> sub.request(1));
+        Disposable disposable2 =WebClient.create("http://localhost:8080/hello/mono").get().retrieve().bodyToMono(String.class).subscribe(i -> System.out.println("next:" + i),
+                error -> System.err.println("Error " + error),
+                () -> System.out.println("Done"),
+                sub -> sub.request(1));
+        Disposable disposable3 = WebClient.create("http://localhost:8080/hello/mono").get().retrieve().bodyToMono(String.class).subscribe(i -> System.out.println("next:" + i),
+                error -> System.err.println("Error " + error),
+                () -> System.out.println("Done"),
+                sub -> sub.request(1));
+        Thread.sleep(6000);
         disposable.dispose();
     }
 }

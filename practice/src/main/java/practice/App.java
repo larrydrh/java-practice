@@ -1,6 +1,7 @@
 package practice;
 
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -13,12 +14,7 @@ public class App {
         System.out.println("in static");
     }
     public static void main(String[] args) throws Exception{
-        System.out.println(System.currentTimeMillis());
-        App app = new App();
-        String[] a = {"1", "2"};
-        System.out.println(a);
-
-//        app.wait(1000);
-        System.out.println(System.currentTimeMillis());
+        System.out.println("args = " + Arrays.deepToString(args));
+        System.out.println("a = 1\nb=2");
     }
 }
