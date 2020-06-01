@@ -1,4 +1,4 @@
-package netty.echo;
+package echo;
 
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -27,6 +27,7 @@ public final class EchoServer {
     public static void main(String[] args) throws Exception {
         // Configure SSL.
         final SslContext sslCtx;
+
         if (SSL) {
             SelfSignedCertificate ssc = new SelfSignedCertificate();
             sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();

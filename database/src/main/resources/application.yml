@@ -8,8 +8,9 @@ spring:
     url: jdbc:mysql://localhost:3306/user?verifyServerCertificate=false&useSSL=false&requireSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
     password: admin
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: always
 
 server:
   port: 8081
+management.metrics.web.server.request.autotime.enabled: true

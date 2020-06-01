@@ -14,13 +14,16 @@
             <option value="$PROJECT_DIR$/google" />
             <option value="$PROJECT_DIR$/greeter" />
             <option value="$PROJECT_DIR$/grpc" />
+            <option value="$PROJECT_DIR$/grpc-client" />
             <option value="$PROJECT_DIR$/kafka" />
             <option value="$PROJECT_DIR$/leetcode" />
+            <option value="$PROJECT_DIR$/netty" />
             <option value="$PROJECT_DIR$/old-java-test" />
             <option value="$PROJECT_DIR$/practice" />
             <option value="$PROJECT_DIR$/rabbitmq" />
             <option value="$PROJECT_DIR$/reactor" />
             <option value="$PROJECT_DIR$/spring-client" />
+            <option value="$PROJECT_DIR$/springboot" />
             <option value="$PROJECT_DIR$/thread-model" />
             <option value="$PROJECT_DIR$/unittest" />
           </set>

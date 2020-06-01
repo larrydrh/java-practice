@@ -17,10 +17,10 @@ import java.io.IOException;
 public class GrpcApplication {
     public static void main(String[] args) throws IOException {
         SpringApplication.run(GrpcApplication.class, args);
-        ;
-        ServerBuilder.forPort(50052).addService(ChannelzService.newInstance(1))
-                .build()
-                .start();
+//        ;
+//        ServerBuilder.forPort(50052).addService(ChannelzService.newInstance(1))
+//                .build()
+//                .start();
 
     }
 

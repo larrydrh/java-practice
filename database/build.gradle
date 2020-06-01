@@ -43,6 +43,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web:2.2.2.RELEASE'
 //    compile('org.springframework.boot:spring-boot-starter-jdbc:2.2.2.RELEASE')
 //    compile 'org.springframework.boot:spring-boot-starter-actuator:2.1.6.RELEASE'
+    compile 'mysql:mysql-connector-java:8.0.18'
 
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     compile group: 'com.baomidou', name: 'mybatis-plus-generator', version: '3.3.1'

@@ -1,4 +1,4 @@
-package netty.echo;
+package echo;
 
 public class EchoClinet {
 }

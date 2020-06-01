@@ -21,4 +21,7 @@ include 'grpc'
 include 'thread-model'
 include 'google'
 include 'kafka'
+include 'springboot'
+include 'grpc-client'
+include 'netty'
 

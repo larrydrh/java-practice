@@ -10,6 +10,8 @@ import java.time.Duration;
 
 
 public class MonoTest {
+
+
     @Test
     public  void testJust() throws InterruptedException {
         Mono<Long> clock = Mono.just(System.currentTimeMillis());
