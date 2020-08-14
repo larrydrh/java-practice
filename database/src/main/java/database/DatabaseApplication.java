@@ -10,6 +10,7 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.metrics.CompositeMeterRegistryAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.diagnostics.FailureAnalysis;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -27,6 +28,7 @@ public class DatabaseApplication {
 
     public static void main(String[] args) throws InterruptedException {
 
+
         ApplicationContext applicationContext = SpringApplication.run(DatabaseApplication.class);
         DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(TestBeanDefinition.class);
@@ -40,7 +42,6 @@ public class DatabaseApplication {
         System.out.println("testScope1:" + testScope1 + "testScope2:" + testScope2);
 
         testScope1.conditionalTestService.print();
-
 
     }
 

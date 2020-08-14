@@ -28,7 +28,6 @@ public class ProducerConsumer {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                         res.name = "renhuan";
                         res.notify();
                         res.wait();

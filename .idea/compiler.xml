@@ -7,8 +7,31 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.4/7103ab519b1cdbb0642ad4eaf1db209d905d0f96/lombok-1.18.4.jar" />
         </processorPath>
+        <module name="java-test.greeter.main" />
+        <module name="java-test.xunfeirealtimeasr.main" />
+        <module name="java-test.websocket.main" />
         <module name="java-test.unittest.main" />
+        <module name="java-test.swagger.main" />
+        <module name="java-test.thread-model.main" />
+        <module name="java-test.spring-client.main" />
+        <module name="java-test.leetcode.main" />
+        <module name="java-test.old-java-test.main" />
+        <module name="java-test.dubbo-demo-provider.main" />
+        <module name="java-test.google.main" />
+        <module name="java-test.xunfeishortstreamasr.main" />
+        <module name="java-test.kafka.main" />
+        <module name="java-test.rabbitmq.main" />
+        <module name="java-test.netty.main" />
+        <module name="java-test.reactor.main" />
+        <module name="java-test.javacv.main" />
+        <module name="java-test.grpc-client.main" />
+        <module name="java-test.database.main" />
+        <module name="java-test.mediainfo.main" />
+        <module name="java-test.practice.main" />
+        <module name="java-test.springboot.main" />
+        <module name="java-test.grpc.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="1.8" />
   </component>
 </project>

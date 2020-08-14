@@ -6,6 +6,7 @@ import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
+import java.util.TreeSet;
 
 
 public class CglibProxy implements MethodInterceptor
@@ -30,11 +31,20 @@ public class CglibProxy implements MethodInterceptor
     }
     public interface Money {
         public String printMoney();
+        public String printMoney1();
     }
     public class MoneyImp implements Money{
         @Override
         public String printMoney() {
             System.out.println("5元");
+//            printMoney1();
+
+            return "xx";
+        }
+
+        @Override
+        public String printMoney1() {
+            System.out.println("15元");
             return "xx";
         }
     }
@@ -43,10 +53,14 @@ public class CglibProxy implements MethodInterceptor
         private String name;
 
         public String getName() {
+
+            System.out.println("get name");
+            setName("xxx");
             return name;
         }
 
         public void setName(String name) {
+            System.out.println("set name");
             this.name = name;
         }
 
@@ -58,9 +72,10 @@ public class CglibProxy implements MethodInterceptor
     public static void main(String[] args) {
         CglibProxy cglibProxy = new CglibProxy();
         CglibUserDao money = (CglibUserDao)cglibProxy.CreatProxyedObj(CglibUserDao.class);
-        money.setName("zhu");
-        money.demand("xxxx");
-
+        money.getName();
+//        money.setName("zhu");
+//        money.demand("xxxx");
+        TreeSet<Integer> a;
 
     }
 }

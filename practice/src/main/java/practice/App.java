@@ -17,5 +17,9 @@ public class App {
         System.out.println("args = " + Arrays.deepToString(args));
         System.out.println("a = 1\nb=2");
         System.out.println(10/(3/1000));
+        String a = "xxxx";
+        for (int i = 0; i < a.length(); i++) {
+
+        }
     }
 }

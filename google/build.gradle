@@ -13,4 +13,5 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile 'com.google.cloud:google-cloud-speech:1.22.3'
+    compile group: 'org.webjars', name: 'google-diff-match-patch', version: '895a9512bb'
 }
